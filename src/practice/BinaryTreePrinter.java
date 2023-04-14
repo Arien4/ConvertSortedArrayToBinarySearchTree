@@ -22,7 +22,7 @@ public class BinaryTreePrinter {
 
         BinaryTreePrinter.printWhitespaces(firstSpaces);
 
-        List<TreeNode> newNodes = new ArrayList<>();
+        List<TreeNode> newNodes = new ArrayList<TreeNode>();
         for (TreeNode node : nodes) {
             if (node != null) {
                 System.out.print(node.val);
@@ -36,24 +36,24 @@ public class BinaryTreePrinter {
 
             BinaryTreePrinter.printWhitespaces(betweenSpaces);
         }
-        //System.out.println("");
+        System.out.println("");
 
         for (int i = 1; i <= endgeLines; i++) {
-            for (TreeNode node : nodes) {
+            for (int j = 0; j < nodes.size(); j++) {
                 BinaryTreePrinter.printWhitespaces(firstSpaces - i);
-                if (node == null) {
+                if (nodes.get(j) == null) {
                     BinaryTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
                     continue;
                 }
 
-                if (node.left != null)
+                if (nodes.get(j).left != null)
                     System.out.print("/");
                 else
                     BinaryTreePrinter.printWhitespaces(1);
 
                 BinaryTreePrinter.printWhitespaces(i + i - 1);
 
-                if (node.right != null)
+                if (nodes.get(j).right != null)
                     System.out.print("\\");
                 else
                     BinaryTreePrinter.printWhitespaces(1);
@@ -61,7 +61,7 @@ public class BinaryTreePrinter {
                 BinaryTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
             }
 
-            //System.out.println("");
+            System.out.println("");
         }
 
         printNodeInternal(newNodes, level + 1, maxLevel);

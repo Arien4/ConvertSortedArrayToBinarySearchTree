@@ -24,8 +24,9 @@ package practice;
 public class Main {
 
     public static void main(String[] args) {
-        int[] nums = {-10, -3, 0, 5, 9};
+        int[] nums = {-1, 0, 1, 5, 9};
 
         TreeNode tree = new Solution().sortedArrayToBST(nums);
+        BinaryTreePrinter.printNode(tree);
     }
 }
