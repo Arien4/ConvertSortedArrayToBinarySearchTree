@@ -1,5 +1,6 @@
 package practice;
 
+import java.io.PrintStream;
 import java.util.Iterator;
 
 public class TreeNode {
@@ -19,34 +20,5 @@ public class TreeNode {
         this.left = left;
         this.right = right;
     }
-
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder(50);
-//        print(sb, "", "");
-//        return sb.toString();
-//    }
-//
-//    private void print(StringBuilder buffer, String prefix, String childrenPrefix) {
-//        buffer.append(prefix);
-//        buffer.append(Integer.toString(val));
-//        buffer.append('\n');
-//
-//        TreeNode node = this;
-//        while (node != null) {
-//
-//            if (node.left != null) {
-//                node.print(buffer, childrenPrefix + "├── ", childrenPrefix + "│   ");
-//            } else {
-//                node.print(buffer, childrenPrefix + "└── ", childrenPrefix + "    ");
-//            }
-//
-//            if (node.right != null) {
-//                node.print(buffer, childrenPrefix + "├── ", childrenPrefix + "│   ");
-//            } else {
-//                node.print(buffer, childrenPrefix + "└── ", childrenPrefix + "    ");
-//            }
-//        }
-//    }
-
 
 }

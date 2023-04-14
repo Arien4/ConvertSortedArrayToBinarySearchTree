@@ -1,91 +1,58 @@
 package practice;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.PrintStream;
 
 public class BinaryTreePrinter {
-    public static <T extends Comparable<?>> void printNode(TreeNode root) {
-        int maxLevel = BinaryTreePrinter.maxLevel(root);
-
-        printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+    TreeNode tree;
+    public BinaryTreePrinter(TreeNode root) {
+        this.tree = root;
     }
 
-    private static <T extends Comparable<?>> void printNodeInternal(List<TreeNode> nodes, int level, int maxLevel) {
-        if (nodes.isEmpty() || BinaryTreePrinter.isAllElementsNull(nodes))
-            return;
+    public String traversePreOrder(TreeNode root) {
 
-        int floor = maxLevel - level;
-        int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
-        int firstSpaces = (int) Math.pow(2, (floor)) - 1;
-        int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+        if (root == null) {
+            return "";
+        }
 
-        BinaryTreePrinter.printWhitespaces(firstSpaces);
+        StringBuilder sb = new StringBuilder();
+        sb.append(root.val);
 
-        List<TreeNode> newNodes = new ArrayList<TreeNode>();
-        for (TreeNode node : nodes) {
-            if (node != null) {
-                System.out.print(node.val);
-                newNodes.add(node.left);
-                newNodes.add(node.right);
+        String pointerRight = "└──";
+        String pointerLeft = (root.right != null) ? "├──" : "└──";
+
+        traverseNodes(sb, "", pointerLeft, root.left, root.right != null);
+        traverseNodes(sb, "", pointerRight, root.right, false);
+
+        return sb.toString();
+    }
+
+    public void traverseNodes(StringBuilder sb, String padding, String pointer, TreeNode node,
+                              boolean hasRightSibling) {
+        if (node != null) {
+            sb.append("\n");
+            sb.append(padding);
+            sb.append(pointer);
+            sb.append(node.val);
+
+            StringBuilder paddingBuilder = new StringBuilder(padding);
+            if (hasRightSibling) {
+                paddingBuilder.append("│  ");
             } else {
-                newNodes.add(null);
-                newNodes.add(null);
-                System.out.print(" ");
+                paddingBuilder.append("   ");
             }
 
-            BinaryTreePrinter.printWhitespaces(betweenSpaces);
+            String paddingForBoth = paddingBuilder.toString();
+            String pointerRight = "└──";
+            String pointerLeft = (node.right != null) ? "├──" : "└──";
+
+            traverseNodes(sb, paddingForBoth, pointerLeft, node.left, node.right != null);
+            traverseNodes(sb, paddingForBoth, pointerRight, node.right, false);
         }
-        System.out.println("");
-
-        for (int i = 1; i <= endgeLines; i++) {
-            for (int j = 0; j < nodes.size(); j++) {
-                BinaryTreePrinter.printWhitespaces(firstSpaces - i);
-                if (nodes.get(j) == null) {
-                    BinaryTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
-                    continue;
-                }
-
-                if (nodes.get(j).left != null)
-                    System.out.print("/");
-                else
-                    BinaryTreePrinter.printWhitespaces(1);
-
-                BinaryTreePrinter.printWhitespaces(i + i - 1);
-
-                if (nodes.get(j).right != null)
-                    System.out.print("\\");
-                else
-                    BinaryTreePrinter.printWhitespaces(1);
-
-                BinaryTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
-            }
-
-            System.out.println("");
-        }
-
-        printNodeInternal(newNodes, level + 1, maxLevel);
     }
 
-    private static void printWhitespaces(int count) {
-        for (int i = 0; i < count; i++)
-            System.out.print(" ");
+    public void print(PrintStream os) {
+        os.print(traversePreOrder(this.tree));
     }
 
-    private static <T extends Comparable<?>> int maxLevel(TreeNode node) {
-        if (node == null)
-            return 0;
-
-        return Math.max(BinaryTreePrinter.maxLevel(node.left), BinaryTreePrinter.maxLevel(node.right)) + 1;
-    }
-
-    private static <T> boolean isAllElementsNull(List<TreeNode> list) {
-        for (Object object : list) {
-            if (object != null)
-                return false;
-        }
-
-        return true;
-    }
 
 }
